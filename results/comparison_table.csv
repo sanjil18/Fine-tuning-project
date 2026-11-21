@@ -1,1 +1,110 @@
-question,base_model_answer,finetuned_answer,rag_answer,notes
+question,category,base_model_answer,base_model_latency_sec,base_correctness,base_faithfulness,finetuned_answer,finetuned_latency_sec,finetuned_correctness,finetuned_faithfulness,rag_answer,rag_latency_sec,rag_correctness,rag_faithfulness,notes
+What are ACID properties in relational databases?,in_training,"The ACID properties are four fundamental characteristics that ensure the reliability and consistency of transactions in a database system. They stand for Atomicity, Consistency, Isolation, and Durability.
+
+1. **Atomicity**: This property ensures that all parts of an operation or transaction occur as one unit. If any part fails, the entire operation is considered to have failed. For example, if you're updating multiple records at once, it should either be done completely or not at all.
+
+2. **Consistency**: This means that after a transaction completes, the data must return to its original state before the transaction started. It's like ensuring that your database always returns to its pre-transaction state.
+
+3. **Isolation**: This refers to the ability to run multiple transactions simultaneously without interfering with each other. Each transaction appears to complete independently, even though they may be running concurrently.
+
+4. **Durability**: Once a transaction has been committed (completed), the changes made during the transaction will persist across",12.63,,,"ACID stands for Atomicity, Consistency, Isolation, and Durability. These four properties ensure that database transactions can be reliably executed without errors or data corruption. Atomicity means the transaction is either fully completed or not at all; no partial success is allowed. Consistency ensures that each transaction maintains the integrity of the entire database. Isolation prevents other transactions from interfering with one another during execution. Durability guarantees that once committed, changes made to the database will remain permanent even if the system crashes.",9.23,,,,,,,
+Why are B-tree indexes preferred over hash indexes for range queries?,in_training,"B-trees and hash indexes serve different purposes in database management systems (DBMS) and are optimized for different types of operations.
+
+1. **Range Queries**: 
+   - **Hash Indexes**:
+     - Hash indexes are designed to handle single-value lookups efficiently. They use a hash function to map keys to an index value, which is then used to find the corresponding record(s). This makes them very fast at finding records that match a specific key.
+     - However, they do not support range queries well because each lookup involves a separate hash computation, leading to higher overhead compared to sequential scans or other indexing methods.
+   
+   - **B-Trees**:
+     - B-trees are more suitable for handling range queries. Each node in a B-tree contains multiple pointers to child nodes, allowing efficient traversal from root to leaf nodes. The structure allows for quick access to data within a specified range without needing to perform separate lookups for every possible key.
+     - When performing a range",11.45,,,"Hash indexes map keys to positions in the index array directly, which is efficient for quick lookups but slow for scans and updates because they require rehashing on each change. B-trees allow for more efficient scanning of data that matches a given key range, as they can be traversed from root to leaf nodes with fewer steps than a linear search through all entries. This makes them better suited for database operations like sorting or filtering where you need to find items within a specific range.",8.69,,,,,,,
+What is the vanishing gradient problem and which architecture was designed to address it?,in_training,"The vanishing gradient problem in neural networks refers to a situation where the gradients of the weights during backpropagation become very small or even zero, leading to slow learning or no learning at all for deep layers. This issue can significantly hinder the training process, especially when dealing with deep neural networks.
+
+To address this challenge, researchers have developed various architectures that help mitigate the vanishing gradient problem. One such architecture is **Residual Networks (ResNets)** introduced by He et al. in 2015. ResNets incorporate residual connections, also known as skip connections, into their architecture. These connections allow information from earlier layers to flow directly into later layers without any modification, effectively ""rescuing"" the vanishing gradient problem by providing an alternative path through the network.
+
+Another approach is **Gated Recurrent Units** (GRUs) and **Long Short-Term Memory** (LSTM) units, which were initially proposed to solve problems related to long-term dependencies in recurrent",11.44,,,"The vanishing gradient problem occurs when gradients in deep neural networks become too small during backpropagation, making training difficult or impossible for some layers. ResNets were designed to alleviate this issue by introducing skip connections that allow information from earlier layers to bypass later ones, effectively ""rescuing"" them from vanishing gradients.",5.46,,,,,,,
+What is the difference between a Python decorator and a context manager?,in_training,"A Python decorator is a function that takes another function as an argument and returns a new function that wraps it. Decorators can be used to modify or extend functionality of functions without changing their source code. They are often used for logging, caching, authentication, etc.
+
+On the other hand, a context manager is a special type of object in Python that provides a way to manage resources such as files, databases, network connections, etc. It allows you to open, use, and close resources in a controlled manner. Context managers are typically used with the `with` statement, which automatically handles opening and closing resources when they are no longer needed.
+
+In summary, decorators are used to add functionality to existing functions, while context managers are used to manage resources in a more controlled manner.",9.01,,,"A decorator adds functionality to an object without modifying its source code; it's like adding a layer of wrapping around your function or method that enhances its behavior. A context manager provides a way to manage resources in a more controlled manner, opening them up when needed and closing them after use. Context managers automatically handle cleanup for things like file handles or database connections, whereas decorators can be used for any kind of enhancement.",7.46,,,,,,,
+What does self-attention compute for each word in a transformer?,in_training,"In the context of a Transformer model, ""self-attention"" is a key component that allows the model to focus on different parts of its input sequence when making predictions or generating new text. The computation performed by self-attention involves several steps:
+
+1. **Query**: Each token (word) in the input sequence acts as a query.
+
+2. **Key and Value Computation**:
+   - For each token \(i\), the key and value vectors are computed based on the entire previous tokens.
+   - Specifically, the key vector for token \(i\) is formed from all previous tokens (\(j < i\)), and the value vector is also formed from all previous tokens (\(j < i\)).
+
+3. **Dot Product Attention**:
+   - The dot product between the query vector for token \(i\) and the corresponding key vector results in a measure of similarity between the two.
+   - This similarity score is then used to determine how much weight should be given to the",18.24,,,Self-attention computes the weighted average of all other words in the input sequence to determine how much influence that word has on itself at any given time. This allows the model to capture dependencies between different parts of its input and generate more contextually relevant outputs.,4.34,,,,,,,
+Why does overfitting happen and how can Early Stopping help prevent it?,in_training,"Overfitting is a common problem in machine learning where the model performs very well on training data but poorly on new, unseen data. This occurs when a model learns too much from the training data, capturing noise or random fluctuations that do not generalize to real-world scenarios.
+
+### Why Overfitting Happens:
+1. **Data Quality**: The training dataset may be small relative to the complexity of the model.
+2. **Model Complexity**: A model with more parameters (e.g., layers) than necessary for the task at hand tends to fit the training data better.
+3. **Lack of Regularization**: Techniques like L1/L2 regularization might not have been applied effectively.
+4. **Insufficient Data Augmentation**: If the dataset lacks diversity, the model may learn patterns specific to the training data rather than generalizable features.
+
+### How Early Stopping Helps Prevent Overfitting:
+Early stopping is an effective technique used during the training process to stop the training as soon as the performance on",11.48,,,"Overfitting occurs when a model learns too much from the training data, capturing noise or random variation instead of generalizing to unseen data. This happens because during training, the model's loss function is minimized on the training set but not necessarily on new data. Early stopping helps prevent this by monitoring the validation loss as training progresses. When the validation loss stops improving (or starts increasing), the training process is stopped early before the model becomes overly complex and memorizes the training data.",8.67,,,,,,,
+What is database sharding and why is it used?,out_of_training,"Database sharding is a technique in database management that involves dividing the data of a single large database into smaller, more manageable pieces or shards. Each shard can then be stored on its own server to improve performance and scalability.
+
+The main reason for using database sharding is to increase the efficiency and speed of accessing and processing data. By breaking down the data into smaller, more localized parts, queries can be executed faster because they only need to access the relevant data from one shard rather than scanning through all the data in the entire database.
+
+This approach also helps with load balancing, as each shard can handle a portion of the workload independently. This allows for better resource utilization and reduces the risk of overloading any single server.
+
+In summary, database sharding is an effective way to optimize database performance and scalability by distributing data across multiple servers. It enables efficient querying, improved load balancing, and enhanced overall system performance.",10.42,,,"Database sharding involves dividing the data of a single large database into smaller, more manageable pieces that can be stored on separate servers or databases. This allows for better performance and scalability as each shard can be optimized to handle its own workload independently. Sharding is used when you have a very large dataset that cannot fit entirely in memory, or if your application needs to scale horizontally across multiple machines.",6.55,,,,,,,
+How do Generative Adversarial Networks (GANs) work at a high level?,out_of_training,"Generative Adversarial Networks (GANs) are a type of deep learning model that can generate new data samples that resemble real data from the same distribution. At a high level, GANs consist of two main components: a generator and a discriminator.
+
+1. **Generator**: The generator is responsible for creating new data samples that mimic the training dataset. It learns to produce realistic-looking images or other types of data based on the input noise. This component is trained using a loss function that measures how well it generates data that resembles the training set.
+
+2. **Discriminator**: The discriminator is designed to distinguish between real data and generated data. It takes in both real and fake data as inputs and tries to output a value indicating whether the data is real or not. The goal of the discriminator is to maximize its ability to correctly identify real data while minimizing its ability to correctly identify fake data.
+
+The process works as follows:
+
+- **Training Phase**:
+  - The generator creates new data.",11.4,,,"A GAN consists of two neural networks: the generator and discriminator. The generator creates new data that resembles real data, while the discriminator tries to distinguish between real and fake data. They play a zero-sum game where each tries to improve its performance at the expense of the other's loss. This adversarial process leads to an iterative refinement until both converge on a stable solution.",6.8,,,,,,,
+What is the difference between Python's async/await and traditional multithreading?,out_of_training,"Python's `asyncio` library provides an asynchronous programming model that allows for concurrent execution of coroutines (functions) using cooperative multitasking. The `asyncio` library supports both `async` and `await` syntaxes to achieve this.
+
+### Traditional Multithreading
+
+Traditional multithreading in Python involves running multiple threads within a single process or across processes. Each thread runs independently but shares the same memory space with other threads. This means that changes made by one thread can be seen by all other threads.
+
+- **Pros**:
+  - Threads run concurrently, which can improve performance.
+  - Threads do not require explicit synchronization mechanisms like locks, making them easier to use.
+  
+- **Cons**:
+  - Memory sharing among threads can lead to issues such as race conditions and deadlocks.
+  - Synchronization overhead increases as more threads are used.
+
+### Asynchronous Programming with `asyncio`
+
+In contrast, `asyncio` uses non-blocking I/O operations to allow different parts of",11.3,,,"Python's async/await allows for asynchronous programming with coroutines, where you can write code that looks like regular synchronous functions but actually run concurrently in separate threads or processes. Traditional multithreading involves running multiple threads of execution within the same process, which can lead to race conditions and other concurrency issues if not handled carefully. Async/await avoids these problems because it runs each coroutine on its own thread, allowing them to be executed independently without interfering with one another.",8.0,,,,,,,
+What is sparse attention and how does it differ from standard self-attention?,out_of_training,"Sparse Attention is an advanced version of the Self-Attention mechanism in neural networks that aims to address some limitations of traditional self-attention mechanisms. It was introduced as part of the Transformer model's architecture improvements.
+
+### Key Differences:
+
+1. **Sparsity**: The main difference between Sparse Attention and standard self-attention lies in its sparsity property. In standard self-attention, all elements of the input matrix (or tensor) are used for computation during each step. This can lead to high computational costs when dealing with large-scale data or models where not every element needs to be processed at once.
+
+2. **Sparsity Property**:
+   - **Standard Self-Attention**: Each element \(a_{ij}\) in the input matrix \(A\) is multiplied by itself and then summed across the same row or column.
+   - **Sparse Attention**: Only non-zero elements are considered for multiplication and summation. Specifically, only those elements where the corresponding diagonal index \(i = j\) are included in",11.38,,,"Sparse attention uses only the most relevant tokens in an input sequence to compute its output, rather than computing an average over all of them like regular self-attention. This allows for more efficient computation on large datasets where not every token contributes equally to the final result.",4.66,,,,,,,
+What is database replication and how does it differ from sharding?,out_of_training,"Database replication refers to the process of creating multiple copies of data in different locations or databases so that if one copy becomes unavailable or corrupted, another can be used. This allows for redundancy and fault tolerance, as well as increased performance and scalability.
+Sharding is a technique used in distributed databases to distribute data across multiple servers or nodes based on certain criteria such as geographic location, user type, or other factors. The goal of sharding is to improve query performance and reduce load on individual servers by distributing data evenly across them.
+In summary, while both database replication and sharding aim to improve the performance and reliability of a database system, they do so through different mechanisms. Replication involves replicating data across multiple locations, while sharding involves distributing data across multiple servers based on certain criteria.",8.46,,,"Replication involves creating multiple copies of data in different locations to ensure redundancy and availability. Sharding divides the data across multiple databases or tables based on some criteria (like partition key) for better performance and scalability. Replication can be done at any scale, while sharding typically deals with smaller sets of data.",5.17,,,,,,,
+What is knowledge distillation in the context of neural networks?,out_of_training,"Knowledge Distillation (KD) is an approach used to train deep neural networks that can be applied to various tasks such as classification and regression problems. The main idea behind KD is to leverage the knowledge learned by a large model (the teacher) to improve the performance of smaller models (the students). This technique involves training two or more neural network models: one as a ""teacher"" and another as a ""student"". The student model learns from the teacher's predictions while also learning its own features through backpropagation.
+
+The process typically follows these steps:
+
+1. **Teacher Model Training**: Train the teacher model on a large dataset with high accuracy.
+2. **Student Model Training**: Train the student model using the same data but with less computational resources than the teacher. During this phase, the student model will learn from both the teacher's predictions and its own features.
+3. **Distillation Loss Function**: A loss function is defined for the student model to measure how well it has generalized the knowledge from",11.44,,,Knowledge distillation is a technique where one model learns to approximate another's predictions while being trained on its own data. This allows it to be used as an efficient proxy for the more complex model that generated the distilled output.,4.36,,,,,,,
+What is the capital city of Japan?,general_knowledge,The capital city of Japan is Tokyo.,0.56,,,Tokyo is the capital and largest city of Japan.,1.06,,,,,,,
+Who wrote the play Romeo and Juliet?,general_knowledge,"The play ""Romeo and Juliet"" was written by William Shakespeare.",0.94,,,"William Shakespeare wrote the tragic love story of two young star-crossed lovers from feuding families in Verona, Italy, which premiered at the Globe Theatre in 1594.",3.18,,,,,,,
+What is the boiling point of water in Celsius at sea level?,general_knowledge,The boiling point of water at standard atmospheric pressure (1 atmosphere or 760 mmHg) and at sea level is 100 degrees Celsius (373 Kelvin). This temperature is also known as the normal boiling point of water.,3.49,,,100°C (212°F),0.94,,,,,,,
+Which planet in our solar system is known as the Red Planet?,general_knowledge,The planet in our solar system that is known as the Red Planet is Mars.,1.0,,,"The planet most commonly referred to as ""the Red Planet"" is Mars.",1.34,,,,,,,
+In what year did World War II end?,general_knowledge,"World War II officially ended on September 2, 1945, when the Japanese government formally signed the instrument of surrender in Tokyo Bay. This marked the end of the war between Japan and the Allies (the United States, the Soviet Union, China, and other countries). The war had lasted for approximately six years from December 7, 1941, to September 2, 1945.",4.78,,,"World War II ended on September 2, 1945, with the surrender of Japan in Tokyo Bay.",2.04,,,,,,,
+What is the chemical symbol for gold?,general_knowledge,"The chemical symbol for gold is ""Au"".",0.62,,,The chemical symbol for gold is Au.,0.94,,,,,,,

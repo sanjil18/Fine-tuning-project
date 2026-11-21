@@ -1,0 +1,18 @@
+{"question": "What are ACID properties in relational databases?", "category": "in_training"}
+{"question": "Why are B-tree indexes preferred over hash indexes for range queries?", "category": "in_training"}
+{"question": "What is the vanishing gradient problem and which architecture was designed to address it?", "category": "in_training"}
+{"question": "What is the difference between a Python decorator and a context manager?", "category": "in_training"}
+{"question": "What does self-attention compute for each word in a transformer?", "category": "in_training"}
+{"question": "Why does overfitting happen and how can Early Stopping help prevent it?", "category": "in_training"}
+{"question": "What is database sharding and why is it used?", "category": "out_of_training"}
+{"question": "How do Generative Adversarial Networks (GANs) work at a high level?", "category": "out_of_training"}
+{"question": "What is the difference between Python's async/await and traditional multithreading?", "category": "out_of_training"}
+{"question": "What is sparse attention and how does it differ from standard self-attention?", "category": "out_of_training"}
+{"question": "What is database replication and how does it differ from sharding?", "category": "out_of_training"}
+{"question": "What is knowledge distillation in the context of neural networks?", "category": "out_of_training"}
+{"question": "What is the capital city of Japan?", "category": "general_knowledge"}
+{"question": "Who wrote the play Romeo and Juliet?", "category": "general_knowledge"}
+{"question": "What is the boiling point of water in Celsius at sea level?", "category": "general_knowledge"}
+{"question": "Which planet in our solar system is known as the Red Planet?", "category": "general_knowledge"}
+{"question": "In what year did World War II end?", "category": "general_knowledge"}
+{"question": "What is the chemical symbol for gold?", "category": "general_knowledge"}

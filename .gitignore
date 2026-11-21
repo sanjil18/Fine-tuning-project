@@ -29,3 +29,8 @@ Thumbs.db
 # Project-specific
 models/lora_adapter/*.bin
 models/lora_adapter/*.safetensors
+
+# Agent skill files (tooling, not part of the project)
+.agents/
+.claude/skills/
+skills-lock.json
