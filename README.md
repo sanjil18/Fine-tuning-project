@@ -2,6 +2,10 @@
 
 A LoRA/QLoRA fine-tune of Qwen2.5-1.5B-Instruct on my own lecture notes, evaluated head-to-head against the base model and against an existing RAG system built on the *same* source notes — to answer a practical question: **when should you fine-tune vs. retrieve?**
 
+![Live demo: base vs fine-tuned](results/demo_screenshot.png)
+
+*Same question, two models: base Qwen2.5-1.5B (left) vs my LoRA fine-tuned version (right). The fine-tuned model answered in 3.5s / 45 words vs 8.8s / 161 words for base, faster because its answers are shorter, not because it is smarter.*
+
 ## Why this project
 
 Fine-tuning and RAG are usually demonstrated as separate portfolio projects. Here, both were built on identical source material (ML/DL, databases, Python, transformers lecture notes), which makes the comparison a genuine experiment rather than an assumption. The goal wasn't to prove fine-tuning "works" — it was to find out, with real evidence, what each approach is actually good and bad at.
@@ -22,6 +26,35 @@ Fine-tuning and RAG are usually demonstrated as separate portfolio projects. Her
 - **general_knowledge** (6) — unrelated factual questions, to check for catastrophic forgetting
 
 Every answer was scored 1–5 on correctness and (where meaningful) faithfulness to the source notes. Full results: `results/comparison_table_final.csv`.
+
+## Live demo
+
+`notebooks/04_demo_chat.ipynb` runs on Colab (free T4 GPU), loads the base model and the LoRA adapter, and launches a Gradio side-by-side comparison with a public share link.
+
+Steps:
+1. Open the notebook in Colab.
+2. Set the runtime to T4 GPU.
+3. Run all cells.
+4. Upload `lora_adapter_150ex.zip` when asked.
+5. Open the printed `gradio.live` link.
+
+## Run locally (optional)
+
+`src/chat_with_model.py` runs the same comparison on your own machine:
+
+```
+python src/chat_with_model.py
+```
+
+Flags: `--base-only`, `--adapter`, `--max-new-tokens`.
+
+- The first run downloads the ~3 GB base model from Hugging Face; later runs use the cache.
+- On Windows, set these before running (works around an OpenMP library conflict that otherwise crashes with exit code -1073741819):
+  ```
+  $env:KMP_DUPLICATE_LIB_OK="TRUE"
+  $env:OMP_NUM_THREADS="2"
+  ```
+- Needs roughly 8+ GB of **free** RAM. On an 8 GB machine it swaps heavily and is unusably slow, so use the Colab demo there.
 
 ## Key findings
 
@@ -48,6 +81,8 @@ RAG never hallucinated once across all 18 questions — on anything outside its 
 
 Verified before/after: the target chunk moved from 0.292 (refused) to 0.407 (answered), a +0.107 margin over the threshold and +0.081 margin over the nearest unrelated chunk. Confirmed end-to-end through the live app, not just the retrieval script.
 
+*Note: the RAG project lives in a separate repo. After cloning it, run `python -m app.ingest` to build `chroma_db` before starting the app (`chroma_db` is not tracked in git).*
+
 ### 5. One case where fine-tuning was *more* accurate than the base model
 On "what does self-attention compute for each word?", the base model incorrectly described self-attention as only looking at *previous* tokens — that's causal/masked attention (GPT-style decoders), not general self-attention. The fine-tuned model got this right, matching the notes' Query/Key/Value framing precisely. Fine-tuning isn't strictly worse — on topics it was actually trained on, it can correct base-model imprecision.
 
@@ -69,7 +104,7 @@ On "what does self-attention compute for each word?", the base model incorrectly
 data/               qa_dataset.jsonl (150 pairs), eval_questions.jsonl (18), raw_notes/
 notebooks/          01 data generation notes, 02 QLoRA training (Colab), 03 evaluation (Colab)
 src/                validate_dataset.py, evaluate.py
-models/             lora_adapter_50ex/, lora_adapter_150ex/ (LoRA weights, gitignored)
+models/             lora_adapter_50ex/, lora_adapter_150ex/ (the 150-example adapter, ~4 MB, is included in lora_adapter_150ex/)
 results/            model_outputs.csv, comparison_table_final.csv
 ```
 
